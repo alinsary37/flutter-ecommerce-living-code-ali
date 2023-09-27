@@ -13,18 +13,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Ecommerce App',
       theme: ThemeData(
         primarySwatch: Colors.red,
-        scaffoldBackgroundColor:const Color(0xFFE5E5E5),
+        scaffoldBackgroundColor: const Color(0xFFE5E5E5),
         inputDecorationTheme: InputDecorationTheme(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(2.0),
-            borderSide:const BorderSide(color: Colors.grey),
+            borderSide: const BorderSide(color: Colors.grey),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(2.0),
-            borderSide:const BorderSide(color: Colors.grey),
+            borderSide: const BorderSide(color: Colors.grey),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(2.0),
+            borderSide: const BorderSide(color: Colors.red),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(2.0),
+            borderSide: const BorderSide(color: Colors.red),
           ),
         ),
       ),
