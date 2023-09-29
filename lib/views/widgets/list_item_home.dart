@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/utilities/assets.dart';
 
-import '../../services/product.dart';
+import '../../models/product.dart';
 
 class ListItemHome extends StatelessWidget {
   final Product product;

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/services/product.dart';
 import 'package:flutter_ecommerce/utilities/assets.dart';
 import 'package:flutter_ecommerce/views/widgets/list_item_home.dart';
 
+import '../../models/product.dart';
+
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   Widget _buildHeaderOfList(BuildContext context,
       // {} فائدته علمود انطي اسم للمتغيرات
@@ -67,14 +68,12 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 16.0, horizontal: 24.0),
                 child: Text(
                   'Street Clothes',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .copyWith(color: Colors.white, fontWeight: FontWeight.w900),
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w900),
                 ),
               )
             ],
@@ -112,11 +111,12 @@ class HomePage extends StatelessWidget {
                   height: 300,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children:
-                    dummyProducts.map((e) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListItemHome(product: e),
-                    )).toList(),
+                    children: dummyProducts
+                        .map((e) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListItemHome(product: e),
+                            ))
+                        .toList(),
                   ),
                 ),
               ],
@@ -125,7 +125,6 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 8.0,
           ),
-
         ],
       ),
     );
