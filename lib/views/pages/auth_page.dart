@@ -31,7 +31,8 @@ class _AuthPageState extends State<AuthPage> {
     try{
       await model.submit();
       if(!mounted) return;
-      Navigator.pushNamed(context, AppRouts.landingPageRote);
+      // لا تحتاج انو تسويه بسبب stream bulider الي مسوية في landing page
+      // Navigator.pushNamed(context, AppRouts.landingPageRote);
     }catch (e) {
       showDialog(
         context: context,
