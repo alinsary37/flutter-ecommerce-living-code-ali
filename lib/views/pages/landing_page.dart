@@ -30,7 +30,9 @@ class _LandingPageState extends State<LandingPage> {
               create: (_)=> AuthController(auth: auth),
                 child: const AuthPage());
           }
-          return const BottomNavBar();
+          return ChangeNotifierProvider<AuthController>(
+              create: (_) => AuthController(auth: auth),
+              child: const BottomNavBar());
         }
         return Scaffold(
           body: Center(

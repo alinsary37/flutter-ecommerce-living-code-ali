@@ -42,6 +42,14 @@ class AuthController with ChangeNotifier {
 
   }
 
+  Future<void> logout()async {
+    try {
+      await auth.logout();
+    }catch (e){
+      rethrow;
+    }
+  }
+
   void copyWith({
     String? email,
     String? password,
