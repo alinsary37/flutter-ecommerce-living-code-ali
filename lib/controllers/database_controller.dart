@@ -1,8 +1,4 @@
-import 'dart:html';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/services/firestore_services.dart';
-
 import '../services/product.dart';
 
 abstract class Database {
@@ -14,6 +10,7 @@ class FiresStoreDatabase implements Database {
 
   @override
   Stream<List<Product>> productStream() => _services.collectionsStream(
+    // الباث تابع الع document الي هو بداخل collection
         path: 'products/',
         builder: (data, documentId) => Product.fromMap(
           data!,

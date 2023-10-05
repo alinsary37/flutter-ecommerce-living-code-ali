@@ -20,6 +20,7 @@ class Product {
     this.rate,
   });
 
+  // فاير ستور ياخذ الديتا الي بيه ماب فقط لذلك الديتا تم تحويها الى ماب
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -32,6 +33,7 @@ class Product {
     };
   }
 
+  // الديتا الي جايه من الفاير ستور عبارة عن ماب لذلك تتحول هنا حسب نوع الديتا الي اندزت الى الفاير ستور فبل متتحول الى ماب
   factory Product.fromMap(Map<String, dynamic> map, String documentId) {
     return Product(
       id: documentId,
