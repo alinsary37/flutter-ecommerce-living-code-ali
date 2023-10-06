@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/controllers/auth_controller.dart';
+import 'package:flutter_ecommerce/controllers/database_controller.dart';
 import 'package:flutter_ecommerce/views/pages/auth_page.dart';
 import 'package:flutter_ecommerce/views/pages/home_page.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,9 @@ class _LandingPageState extends State<LandingPage> {
           }
           return ChangeNotifierProvider<AuthController>(
               create: (_) => AuthController(auth: auth),
-              child: const BottomNavBar());
+              child: Provider<Database>(
+                  create: (_) => FiresStoreDatabase(user.uid),
+                  child: const BottomNavBar()));
         }
         return Scaffold(
           body: Center(

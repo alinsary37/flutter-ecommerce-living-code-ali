@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/utilities/assets.dart';
 
 class Product {
@@ -8,7 +7,7 @@ class Product {
   final String imgUrl;
   final int? discountValue;
   final String category;
-  final double? rate;
+  final int? rate;
 
   Product({
     required this.id,
@@ -42,7 +41,7 @@ class Product {
       imgUrl: map['imgUrl'] as String,
       discountValue: map['discountValue'] as int,
       category: map['category'] as String,
-      rate: map['rate'] as double,
+      rate: map['rate'] as int,
     );
   }
 }
@@ -54,7 +53,7 @@ List<Product> dummyProducts = [
       title: 'T-Shirt',
       price: 300,
       imgUrl: AppAssets.temProductAssets1,
-      category: 'other',
+      category: 'Clothes',
       discountValue: 20),
   Product(
       id: '1',
