@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/controllers/database_controller.dart';
 import 'package:flutter_ecommerce/services/product.dart';
 import 'package:flutter_ecommerce/utilities/assets.dart';
 import 'package:flutter_ecommerce/views/widgets/list_item_home.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -46,6 +49,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final database = Provider.of<Database>(context);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -67,14 +71,12 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 16.0, horizontal: 24.0),
                 child: Text(
                   'Street Clothes',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .copyWith(color: Colors.white, fontWeight: FontWeight.w900),
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w900),
                 ),
               )
             ],
@@ -91,15 +93,37 @@ class HomePage extends StatelessWidget {
                     onTap: () {},
                     description: 'Super Summer Sale!'),
                 SizedBox(
-                  height: 300,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: dummyProducts
-                        .map((e) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ListItemHome(product: e),
-                            ))
-                        .toList(),
+                  height: 350,
+                  // just discount items
+                  child: StreamBuilder<List<Product>>(
+                    stream: database.salesProductStream(),
+                    builder: (_, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        final products = snapshot.data;
+                        if (products == null || products.isEmpty) {
+                          return const Center(
+                            child: Text('No Data Available!'),
+                          );
+                        }
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: products.length,
+                          itemBuilder: (context, int index) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListItemHome(product: products[index]),
+                          ),
+                        );
+                      }
+                      return SpinKitFadingCircle(
+                        itemBuilder: (BuildContext context, int index) {
+                          return DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: index.isEven ? Colors.red : Colors.green,
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
                 _buildHeaderOfList(
@@ -109,14 +133,37 @@ class HomePage extends StatelessWidget {
                   description: 'Super Summer Product',
                 ),
                 SizedBox(
-                  height: 300,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children:
-                    dummyProducts.map((e) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListItemHome(product: e),
-                    )).toList(),
+                  height: 350,
+                  // all products
+                  child: StreamBuilder<List<Product>>(
+                    stream: database.newProductStream(),
+                    builder: (_, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        final products = snapshot.data;
+                        if (products == null || products.isEmpty) {
+                          return const Center(
+                            child: Text('No Data Available!'),
+                          );
+                        }
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: products.length,
+                          itemBuilder: (context, int index) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListItemHome(product: products[index]),
+                          ),
+                        );
+                      }
+                      return SpinKitFadingCircle(
+                        itemBuilder: (BuildContext context, int index) {
+                          return DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: index.isEven ? Colors.red : Colors.green,
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
               ],
@@ -125,9 +172,10 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 8.0,
           ),
-
         ],
       ),
     );
   }
 }
+
+
