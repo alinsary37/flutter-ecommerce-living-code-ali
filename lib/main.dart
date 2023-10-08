@@ -30,9 +30,12 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
           scaffoldBackgroundColor: const Color(0xFFE5E5E5),
           inputDecorationTheme: InputDecorationTheme(
+            labelStyle: Theme.of(context).textTheme.subtitle1,
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(2.0),
-              borderSide: const BorderSide(color: Colors.grey),
+              borderRadius: BorderRadius.circular(16.0),
+              borderSide: const BorderSide(
+                color: Colors.grey,
+              ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(2.0),

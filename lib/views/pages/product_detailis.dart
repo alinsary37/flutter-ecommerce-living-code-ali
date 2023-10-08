@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/views/widgets/drop_down_menu.dart';
 import 'package:flutter_ecommerce/views/widgets/main_button.dart';
 
 import '../../services/product.dart';
@@ -14,6 +15,7 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   bool isFavorite = false;
+  late String dropdownValue = 'S';
 
   @override
   Widget build(BuildContext context) {
@@ -47,33 +49,52 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          isFavorite = !isFavorite;
-                        });
-                      },
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: DecoratedBox(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Icon(
-                            isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border_outlined,
-                            color: isFavorite ? Colors.red : Colors.black,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 60,
+                          child: DropDownMenuComponent(
+                            items:  const ['S', 'M', 'L', 'XL', 'XXL'],
+                            onChanged: (String? newValue){
+                              setState(() {
+                                dropdownValue = newValue!;
+                              });
+
+                            }, hint: 'Size',
                           ),
                         ),
                       ),
-                    ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            isFavorite = !isFavorite;
+                          });
+                        },
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: DecoratedBox(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Icon(
+                              isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border_outlined,
+                              color: isFavorite ? Colors.red : Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 4,),
+                  const SizedBox(
+                    height: 4,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -101,10 +122,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                     'This is a dummy description for this product! I think we will add it in the future!',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                 const SizedBox(
+                  const SizedBox(
                     height: 8.0,
                   ),
-                  MainButton(onPressed: (){}, text: 'Add Cart',hasCircularBorder: true,)
+                  MainButton(
+                    onPressed: () {},
+                    text: 'Add Cart',
+                    hasCircularBorder: true,
+                  )
                 ],
               ),
             )
