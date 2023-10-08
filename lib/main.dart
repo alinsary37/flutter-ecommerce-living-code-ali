@@ -23,6 +23,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Ecommerce App',
         theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.white,
+            iconTheme: IconThemeData(color: Colors.black),
+          ),
           primarySwatch: Colors.red,
           scaffoldBackgroundColor: const Color(0xFFE5E5E5),
           inputDecorationTheme: InputDecorationTheme(

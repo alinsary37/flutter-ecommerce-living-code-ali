@@ -93,7 +93,7 @@ class HomePage extends StatelessWidget {
                     onTap: () {},
                     description: 'Super Summer Sale!'),
                 SizedBox(
-                  height: 300,
+                  height: 350,
                   // just discount items
                   child: StreamBuilder<List<Product>>(
                     stream: database.salesProductStream(),
@@ -133,7 +133,7 @@ class HomePage extends StatelessWidget {
                   description: 'Super Summer Product',
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 350,
                   // all products
                   child: StreamBuilder<List<Product>>(
                     stream: database.newProductStream(),
@@ -177,3 +177,5 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+
