@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/views/pages/cart_page.dart';
 import 'package:flutter_ecommerce/views/pages/home_page.dart';
 import 'package:flutter_ecommerce/views/pages/profile_page.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -17,8 +18,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   List<Widget> _buildScreens() {
     // لازم عدد السكرين ياسوي عدد navBarItem بالضبط
     return [
+      CartPage(),
       HomePage(),
-      Container(),
       Container(),
       Container(),
       ProfilePage(),
@@ -29,23 +30,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
+        icon: Icon(
+            CupertinoIcons.bag),
+        title: ("Cart"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
         title: ("Home"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.bag),
+        icon: Icon(CupertinoIcons.cart),
         title: ("Shop"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
-      PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.cart),
-        title: ("Cart"),
-        activeColorPrimary: CupertinoColors.activeBlue,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
+
       PersistentBottomNavBarItem(
         icon: Icon(Icons.favorite),
         title: ("Favorites"),
