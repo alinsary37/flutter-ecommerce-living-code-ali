@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/controllers/database_controller.dart';
 import 'package:flutter_ecommerce/utilities/assets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_ecommerce/utilities/router.dart';
+import 'package:provider/provider.dart';
 
-import '../../services/product.dart';
+import '../../models/product.dart';
 
 class ListItemHome extends StatefulWidget {
   final Product product;
@@ -20,11 +22,15 @@ class _ListItemHomeState extends State<ListItemHome> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final database = Provider.of<Database>(context) ;
     return InkWell(
       onTap: () {
         // الغاية من روت نيفيكيتر علمود يطلع من bottom bar
         Navigator.of(context, rootNavigator: true)
-            .pushNamed(AppRouts.productDetailsRoute, arguments: widget.product);
+            .pushNamed(AppRouts.productDetailsRoute, arguments: {
+              'product' : widget.product,
+          'database': database,
+        });
       },
       child: DecoratedBox(
         decoration: BoxDecoration(),
