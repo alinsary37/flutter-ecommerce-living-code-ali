@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/controllers/database_controller.dart';
+import 'package:flutter_ecommerce/models/add_to_cart_model.dart';
 import 'package:flutter_ecommerce/views/widgets/drop_down_menu.dart';
 import 'package:flutter_ecommerce/views/widgets/main_button.dart';
+import 'package:flutter_ecommerce/views/widgets/main_dialog.dart';
+import 'package:provider/provider.dart';
 
-import '../../services/product.dart';
+import '../../models/product.dart';
+import '../../utilities/constant.dart';
 
 class ProductDetails extends StatefulWidget {
   final Product product;
@@ -17,9 +22,21 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool isFavorite = false;
   late String dropdownValue = 'S';
 
+  Future<void> _addToCart (Database database) async{
+    try {
+      final addToProduct = AddToCartModel(id: documentIdFromLocalData(), productId: widget.product.id, title: widget.product.title, price: widget.product.price, imgUrl: widget.product.imgUrl, size: dropdownValue);
+      await database.addToCart(addToProduct);
+    }
+    catch (e){
+      return MainDialog(context: context, title: 'Error', content: 'Couldn\'t adding to the cart, please try again!').showAlertDialog();
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final database = Provider.of<Database>(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -126,7 +143,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     height: 8.0,
                   ),
                   MainButton(
-                    onPressed: () {},
+                    onPressed: ()=> _addToCart(database),
                     text: 'Add Cart',
                     hasCircularBorder: true,
                   )

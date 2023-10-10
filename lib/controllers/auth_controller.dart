@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/controllers/database_controller.dart';
+import 'package:flutter_ecommerce/models/user_data.dart';
 import 'package:flutter_ecommerce/services/auth.dart';
 import 'package:flutter_ecommerce/utilities/enums.dart';
+
+import '../utilities/constant.dart';
 
 class AuthController with ChangeNotifier {
   final AuthBase auth;
   String email;
   String password;
   AuthFormType authFormType;
+  final database = FiresStoreDatabase('123');
 
   AuthController({
     required this.auth,
@@ -29,23 +34,29 @@ class AuthController with ChangeNotifier {
       password: '',
     );
   }
-  Future<void> submit ()async {
+
+  Future<void> submit() async {
     try {
-      if (authFormType == AuthFormType.login){
+      if (authFormType == AuthFormType.login) {
         await auth.loginWithEmailAndPassword(email, password);
       } else {
-        await auth.registerWithEmailAndPassword(email, password);
+        final user = await auth.registerWithEmailAndPassword(email, password);
+        await database.setUserData(
+          UserData(
+            uid:  user?.uid ?? documentIdFromLocalData(),
+            email: email,
+          ),
+        );
       }
-    }catch (e){
+    } catch (e) {
       rethrow;
     }
-
   }
 
-  Future<void> logout()async {
+  Future<void> logout() async {
     try {
       await auth.logout();
-    }catch (e){
+    } catch (e) {
       rethrow;
     }
   }
