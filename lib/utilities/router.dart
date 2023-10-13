@@ -7,4 +7,5 @@ class AppRouts {
   static const String loginPageRoute = '/login';
   static const String bottomNavBarPAgeRoute = '/navbar';
   static const String productDetailsRoute = '/product_details';
+  static const String checkoutPageRoute = '/checkout';
 }
