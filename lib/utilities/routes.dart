@@ -13,6 +13,8 @@ import 'package:flutter_ecommerce/views/pages/product_detailis.dart';
 import 'package:flutter_ecommerce/views/pages/profile_page.dart';
 import 'package:provider/provider.dart';
 
+import '../views/pages/checkout_page/checkout_page.dart';
+
 Route<dynamic> onGenerate(RouteSettings settings) {
   switch (settings.name) {
     case AppRouts.loginPageRoute:
@@ -21,11 +23,22 @@ Route<dynamic> onGenerate(RouteSettings settings) {
         settings: settings,
       );
     case AppRouts.productDetailsRoute:
-     final args = settings.arguments as Map<String, dynamic>;
-     final product = args['product'];
-     final database = args['database'];
+      final args = settings.arguments as Map<String, dynamic>;
+      final product = args['product'];
+      final database = args['database'];
       return CupertinoPageRoute(
-        builder: (_) =>  Provider<Database>.value(value:database ,child: ProductDetails(product: product,)),
+        builder: (_) => Provider<Database>.value(
+            value: database,
+            child: ProductDetails(
+              product: product,
+            )),
+        settings: settings,
+      );
+    case AppRouts.checkoutPageRoute:
+      final database = settings.arguments as Database;
+
+      return CupertinoPageRoute(
+        builder: (_) =>  Provider<Database>.value(value: database,child: CheckoutPage()),
         settings: settings,
       );
     case AppRouts.profilePageRoute:

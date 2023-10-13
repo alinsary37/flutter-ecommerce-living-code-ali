@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/controllers/database_controller.dart';
+import 'package:flutter_ecommerce/utilities/router.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../widgets/cart_list_item.dart';
 import '../widgets/main_button.dart';
+import '../widgets/order_summery_component.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   const CartPage({super.key});
+
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  int totalAmount = 0;
+
+  // didChangeDependencies مع كل ابديت راح يصير بالصحفة راح تجدد هاي الفنكشن
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    final myProducts = await Provider.of<Database>(context, listen: false)
+        .myProductsCart()
+        .first;
+    for (var element in myProducts) {
+      totalAmount += element.price;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,26 +79,12 @@ class CartPage extends StatelessWidget {
                         ),
                       ),
                     const SizedBox(height: 24.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Total Amount:',
-                          style:
-                          Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        Text(
-                          '1250\$',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                      ],
-                    ),
+                    OrderSummeryComponent(title: 'Total Amount', value: totalAmount.toString()),
                     const SizedBox(height: 32.0),
                     MainButton(
                       text: 'Checkout',
-                      onPressed: () {},
+                      onPressed: () => Navigator.of(context,rootNavigator: true)
+                          .pushNamed(AppRouts.checkoutPageRoute, arguments: database),
                       hasCircularBorder: true,
                     ),
                     const SizedBox(height: 32.0),

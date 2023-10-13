@@ -7,4 +7,6 @@ class ApiPath {
       'users/$uid/cart/$addToCartId';
   static String myProductsCart(String uid, ) =>
       'users/$uid/cart/';
+
+  static String deliveryMethods() => 'deliveryMethods/';
 }
