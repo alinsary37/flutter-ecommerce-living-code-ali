@@ -9,4 +9,6 @@ class ApiPath {
       'users/$uid/cart/';
 
   static String deliveryMethods() => 'deliveryMethods/';
+  static String userShippingAddress(String uid,) => 'users/$uid/shippingAddresses/';
+  static String newAddress(String uid, String addressId) => 'users/$uid/shippingAddresses/$addressId';
 }

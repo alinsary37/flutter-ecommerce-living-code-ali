@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/models/shipping_address.dart';
 
 class ShippingAddressComponent extends StatelessWidget {
-  const ShippingAddressComponent({Key? key}) : super(key: key);
+  final ShippingAddress shippingAddress;
+   const ShippingAddressComponent({Key? key, required this.shippingAddress}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
