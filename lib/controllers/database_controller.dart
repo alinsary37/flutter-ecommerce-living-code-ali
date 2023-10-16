@@ -13,7 +13,10 @@ abstract class Database {
 
   Future<void> setUserData(UserData userData);
 
+
   Future<void> addToCart(AddToCartModel product);
+
+  Future<void> savingAddress(ShippingAddress address);
 
   Stream<List<AddToCartModel>> myProductsCart();
 
@@ -79,5 +82,8 @@ class FiresStoreDatabase implements Database {
         builder: (data, documentId) =>
             ShippingAddress.fromMap(data!, documentId),
       );
+
+  @override
+  Future<void> savingAddress(ShippingAddress address) => _services.setData(path: ApiPath.newAddress(uid, address.id), data: address.toMap());
 
 }
