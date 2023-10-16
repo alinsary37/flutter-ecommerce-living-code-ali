@@ -3,6 +3,7 @@ import 'package:flutter_ecommerce/models/deliver_methods.dart';
 import 'package:flutter_ecommerce/services/firestore_services.dart';
 import 'package:flutter_ecommerce/utilities/api_path.dart';
 import '../models/product.dart';
+import '../models/shipping_address.dart';
 import '../models/user_data.dart';
 
 abstract class Database {
@@ -17,6 +18,8 @@ abstract class Database {
   Stream<List<AddToCartModel>> myProductsCart();
 
   Stream<List<DeliveryMethod>> deliveryMethodStream();
+
+  Stream<List<ShippingAddress>> getShippingAddresses();
 }
 
 class FiresStoreDatabase implements Database {
@@ -69,4 +72,12 @@ class FiresStoreDatabase implements Database {
           path: ApiPath.deliveryMethods(),
           builder: (data, documentId) =>
               DeliveryMethod.fromMap(data!, documentId));
+  @override
+  Stream<List<ShippingAddress>> getShippingAddresses() =>
+      _services.collectionsStream(
+        path: ApiPath.userShippingAddress(uid),
+        builder: (data, documentId) =>
+            ShippingAddress.fromMap(data!, documentId),
+      );
+
 }

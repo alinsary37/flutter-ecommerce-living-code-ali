@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/controllers/database_controller.dart';
 import 'package:flutter_ecommerce/models/deliver_methods.dart';
+import 'package:flutter_ecommerce/models/shipping_address.dart';
 import 'package:flutter_ecommerce/utilities/assets.dart';
+import 'package:flutter_ecommerce/utilities/router.dart';
 import 'package:flutter_ecommerce/views/widgets/checkout/delivery_methodItemItem.dart';
 import 'package:flutter_ecommerce/views/widgets/checkout/shipping_address_component.dart';
 import 'package:flutter_ecommerce/views/widgets/main_button.dart';
@@ -37,7 +39,41 @@ class CheckoutPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8.0),
-              const ShippingAddressComponent(),
+              StreamBuilder<List<ShippingAddress>>(
+                stream: database.getShippingAddresses(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    final shippingAddress = snapshot.data;
+                    if (shippingAddress == null || shippingAddress.isEmpty) {
+                      return Center(
+                        child: Column(
+                          children: [
+                            Text('No Data Available!'),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(AppRouts.addShippingAddress, arguments: database);
+                              },
+                              child: const Text('Add shipping address'),
+                            )
+                          ],
+                        ),
+                      );
+                    }
+                    if (shippingAddress.isNotEmpty) {
+                      return ShippingAddressComponent();
+                    }
+                  }
+                  return SpinKitFadingCircle(
+                    itemBuilder: (BuildContext context, int index) {
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: index.isEven ? Colors.red : Colors.green,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
               const SizedBox(height: 24.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,39 +87,43 @@ class CheckoutPage extends StatelessWidget {
                     child: Text(
                       'Change',
                       style: Theme.of(context).textTheme.button!.copyWith(
-                        color: Colors.redAccent,
-                      ),
+                            color: Colors.redAccent,
+                          ),
                     ),
                   ),
                 ],
               ),
-             const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               const PaymentComponent(),
-              const SizedBox(height: 16.0,),
+              const SizedBox(
+                height: 16.0,
+              ),
               StreamBuilder<List<DeliveryMethod>>(
                 stream: database.deliveryMethodStream(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.active) {
                     final deliverBy = snapshot.data;
                     if (deliverBy == null || deliverBy.isEmpty) {
-                      return const Center(child:
-                      Text('No Data Available!'));
+                      return const Center(child: Text('No Data Available!'));
                     }
                     if (deliverBy.isNotEmpty) {
                       return SizedBox(
-                      height: size.height * 0.12,
-                      child: ListView.builder(
-                        itemCount: deliverBy.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder:  (context, int i) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: DeliveryMethodItem(deliveryMethod: deliverBy[i]),
+                        height: size.height * 0.12,
+                        child: ListView.builder(
+                          itemCount: deliverBy.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, int i) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: DeliveryMethodItem(
+                                deliveryMethod: deliverBy[i]),
+                          ),
                         ),
-                      ),
-                    );
+                      );
                     }
                   }
-                  return  SpinKitFadingCircle(
+                  return SpinKitFadingCircle(
                     itemBuilder: (BuildContext context, int index) {
                       return DecoratedBox(
                         decoration: BoxDecoration(
@@ -94,14 +134,22 @@ class CheckoutPage extends StatelessWidget {
                   );
                 },
               ),
-             const SizedBox(height: 32.0,),
+              const SizedBox(
+                height: 32.0,
+              ),
               Text(
                 'Delivery method',
                 style: Theme.of(context).textTheme.headline6,
               ),
-             const CheckoutOrderDetails(),
-              const SizedBox(height: 64.0,),
-              MainButton(onPressed: (){}, text: 'Submit Order',hasCircularBorder: true,)
+              const CheckoutOrderDetails(),
+              const SizedBox(
+                height: 64.0,
+              ),
+              MainButton(
+                onPressed: () {},
+                text: 'Submit Order',
+                hasCircularBorder: true,
+              )
             ],
           ),
         ),
