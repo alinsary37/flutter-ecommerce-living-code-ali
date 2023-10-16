@@ -59,9 +59,8 @@ class CheckoutPage extends StatelessWidget {
                         ),
                       );
                     }
-                    if (shippingAddress.isNotEmpty) {
-                      return ShippingAddressComponent();
-                    }
+                      final shippingAdd = shippingAddress.first;
+                      return ShippingAddressComponent(shippingAddress: shippingAdd);
                   }
                   return SpinKitFadingCircle(
                     itemBuilder: (BuildContext context, int index) {
