@@ -12,6 +12,7 @@ import 'package:flutter_ecommerce/views/pages/landing_page.dart';
 import 'package:flutter_ecommerce/views/pages/auth_page.dart';
 import 'package:flutter_ecommerce/views/pages/product_detailis.dart';
 import 'package:flutter_ecommerce/views/pages/profile_page.dart';
+import 'package:flutter_ecommerce/views/widgets/checkout/shipping_address_page.dart';
 import 'package:provider/provider.dart';
 
 import '../views/pages/checkout_page/checkout_page.dart';
@@ -44,12 +45,21 @@ Route<dynamic> onGenerate(RouteSettings settings) {
         ),
         settings: settings,
       );
-    case AppRouts.addShippingAddress:
+    case AppRouts.addShippingAddressRoute:
       final database = settings.arguments as Database;
       return CupertinoPageRoute(
         builder: (_) => Provider<Database>.value(
           value: database,
           child:const AddShippingAddressPage(),
+        ),
+        settings: settings,
+      );
+    case AppRouts.shippingAddressesRoute:
+      final database = settings.arguments as Database;
+      return CupertinoPageRoute(
+        builder: (_) => Provider<Database>.value(
+          value: database,
+          child:const ShippingAddressesPage(),
         ),
         settings: settings,
       );

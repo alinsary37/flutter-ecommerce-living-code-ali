@@ -51,7 +51,7 @@ class CheckoutPage extends StatelessWidget {
                             Text('No Data Available!'),
                             TextButton(
                               onPressed: () {
-                                Navigator.of(context).pushNamed(AppRouts.addShippingAddress, arguments: database);
+                                Navigator.of(context).pushNamed(AppRouts.addShippingAddressRoute, arguments: database);
                               },
                               child: const Text('Add shipping address'),
                             )
