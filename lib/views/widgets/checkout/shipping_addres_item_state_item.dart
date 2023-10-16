@@ -21,7 +21,7 @@ class _ShippingAddressStateItemState extends State<ShippingAddressStateItem> {
 
   @override
   void initState() {
-    checkedValue = false;
+    checkedValue = widget.shippingAddress.isDefault;
     super.initState();
   }
 
@@ -73,10 +73,12 @@ class _ShippingAddressStateItemState extends State<ShippingAddressStateItem> {
             ),
             CheckboxListTile(
                 title: const Text("Default shipping address"),
-                value:  checkedValue, onChanged: (newValue){
+                value:  checkedValue, onChanged: (newValue)async{
               setState(() {
                 checkedValue = newValue!;
               });
+              final newAddress = widget.shippingAddress.copyWith(isDefault: newValue);
+              await database.savingAddress(newAddress);
             }),
           ],
         ),
