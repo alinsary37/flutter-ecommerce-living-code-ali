@@ -8,7 +8,8 @@ import '../../../utilities/constant.dart';
 import '../../widgets/main_button.dart';
 
 class AddShippingAddressPage extends StatefulWidget {
-  const AddShippingAddressPage({super.key});
+  ShippingAddress? shippingAddress;
+  AddShippingAddressPage({super.key, this.shippingAddress});
 
   @override
   State<AddShippingAddressPage> createState() => _AddShippingAddressPageState();
@@ -22,7 +23,21 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
   final _stateController = TextEditingController();
   final _zipCodeController = TextEditingController();
   final _countryController = TextEditingController();
+  ShippingAddress? shippingAddress;
 
+  @override
+  void initState() {
+    shippingAddress = widget.shippingAddress;
+    if (shippingAddress  != null){
+      _fullNameController.text = shippingAddress!.fullName;
+      _addressController.text = shippingAddress!.address;
+      _cityController.text = shippingAddress!.city;
+      _stateController.text = shippingAddress!.state;
+      _zipCodeController.text = shippingAddress!.zipCode;
+      _countryController.text = shippingAddress!.country;
+    }
+    super.initState();
+  }
   @override
   void dispose() {
     _fullNameController.dispose();
@@ -37,7 +52,7 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
     try {
       if (_formKey.currentState!.validate()) {
         final address = ShippingAddress(
-          id: documentIdFromLocalData(),
+          id:shippingAddress != null ? shippingAddress!.id : documentIdFromLocalData(),
           fullName: _fullNameController.text.trim(),
           country: _countryController.text.trim(),
           address: _addressController.text.trim(),
@@ -81,6 +96,7 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
                       labelText: 'Full Name',
                       fillColor: Colors.white,
                       filled: true),
+
                   controller: _fullNameController,
                   validator: (value) =>
                       value!.isNotEmpty ? null : 'please enter your name',
@@ -93,6 +109,7 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
                     fillColor: Colors.white,
                     filled: true,
                   ),
+
                   validator: (value) =>
                       value!.isNotEmpty ? null : 'Please enter your name',
                 ),
@@ -104,28 +121,31 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
                     fillColor: Colors.white,
                     filled: true,
                   ),
+
                   validator: (value) =>
                       value!.isNotEmpty ? null : 'Please enter your name',
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  controller: _stateController,
+
                   decoration: const InputDecoration(
                     labelText: 'State/Province',
                     fillColor: Colors.white,
                     filled: true,
                   ),
+                  initialValue: shippingAddress?.state,
                   validator: (value) =>
                       value!.isNotEmpty ? null : 'Please enter your name',
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  controller: _zipCodeController,
+
                   decoration: const InputDecoration(
                     labelText: 'Zip Code',
                     fillColor: Colors.white,
                     filled: true,
                   ),
+
                   validator: (value) =>
                       value!.isNotEmpty ? null : 'Please enter your name',
                 ),
@@ -137,6 +157,7 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
                     fillColor: Colors.white,
                     filled: true,
                   ),
+
                   validator: (value) =>
                       value!.isNotEmpty ? null : 'Please enter your name',
                 ),

@@ -82,7 +82,9 @@ class CheckoutPage extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+
+                    },
                     child: Text(
                       'Change',
                       style: Theme.of(context).textTheme.button!.copyWith(

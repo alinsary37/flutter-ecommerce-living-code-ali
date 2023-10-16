@@ -23,13 +23,13 @@ class ShippingAddressComponent extends StatelessWidget {
               children: [
                 Text(
                   'Tarek Alabd',
-                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(AppRouts.addShippingAddressRoute,arguments: database);
+                    Navigator.of(context).pushNamed(AppRouts.shippingAddressesRoute,arguments: database);
                   },
                   child: Text(
                     'Change',
